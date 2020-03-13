@@ -1,8 +1,8 @@
-# JSON_API
+# json_api
 
-API manage JSON document in SQL database
+API manage JSON documents
 
-## Documentaion
+## Documentation
 
 Open your favorit browser and see this [link](http://localhost:8080/api/documentation) after start local dev command
 
@@ -45,4 +45,3 @@ Test function
 ```bash
 npm run test
 ```
-# json_api
