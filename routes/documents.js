@@ -1,47 +1,29 @@
 const router = require('express').Router();
-// const documentsValidation = require('../documents/documentsValidation');
+const documentsValidation = require('../documents/documentsValidation');
 const documentsController = require('../documents/documentsController');
 
 /* GET */
 
-router.get('/', documentsController.getAll);
-router.get('/:id', documentsController.getOne);
+router.get('/', documentsValidation.getAll, documentsController.getAll);
+router.get('/:id', documentsValidation.getOne, documentsController.getOne);
+// router.get('/:frstId/diff/:scndId', documentsValidation.diff, documentsController.diff);
 
 /* POST */
 
-router.post('/', documentsController.post);
-
-/* PUT */
-
-router.put('/:id', documentsController.put);
-
-/* PATCH */
-
-router.patch('/:id', documentsController.patch);
-
-/* DELETE */
-
-router.delete('/:id', documentsController.remove);
-
-// /* GET */
-
-// router.get('/', documentsValidation.getAll, documentsController.getAll);
-// router.get('/:id', documentsValidation.getOne, documentsController.getOne);
-
-// /* POST */
-
-// router.post('/', documentsValidation.post, documentsController.post);
+router.post('/', documentsValidation.post, documentsController.post);
 
 // /* PUT */
 
+router.put('/:id', documentsController.put);
 // router.put('/:id', documentsValidation.put, documentsController.put);
 
 // /* PATCH */
 
+router.patch('/:id', documentsController.patch);
 // router.patch('/:id', documentsValidation.patch, documentsController.patch);
 
-// /* DELETE */
+/* DELETE */
 
-// router.delete('/:id', documentsValidation.delete, documentsController.delete);
+router.delete('/:id', documentsValidation.remove, documentsController.remove);
 
 module.exports = router;
