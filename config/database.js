@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const database = new Sequelize('json_api_db', 'root', null, {
   host: 'localhost',
