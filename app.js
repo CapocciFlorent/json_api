@@ -10,8 +10,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/', documentsRouter);
 app.use('/documentation', documentationRouter);
+app.use('/', documentsRouter);
 
 app.use(async (err, _, res, next) => {
   await errorHandler.handleError(err);
