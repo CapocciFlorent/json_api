@@ -4,7 +4,7 @@ const APIError = require('../APIError');
 async function getAll() {
   const documents = await DocumentModel.findAll();
 
-  if (!documents) {
+  if (!documents || !documents.length) {
     throw new APIError(
       {
         name: 'document_not_found',
@@ -14,10 +14,36 @@ async function getAll() {
       true,
     );
   }
-  return documents;
+  return documents.map(document => document.toResponse(document));
 }
 
 async function getOne(id) {
+  const document = await DocumentModel.findByPk(id);
+
+  if (!document) {
+    throw new APIError(
+      {
+        name: 'document_not_found',
+        httpCode: 404,
+        details: [`Document with id ${id} cannot be found`],
+      },
+      true,
+    );
+  }
+  return document.toResponse(document);
+}
+
+async function create(properties) {
+  const document = await DocumentModel.create({ ...properties });
+
+  return document.toResponse(document);
+}
+
+async function update() {
+
+}
+
+async function remove(id) {
   const document = await DocumentModel.findByPk(id);
 
   if (!document) {
@@ -30,19 +56,7 @@ async function getOne(id) {
       true,
     );
   }
-  return document;
-}
-
-async function create() {
-
-}
-
-async function update() {
-
-}
-
-async function remove() {
-
+  await document.destroy();
 }
 
 module.exports = {
