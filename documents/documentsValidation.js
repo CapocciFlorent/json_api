@@ -12,7 +12,21 @@ async function getOne(req, _, next) {
 
   try {
     await idSchema.validateAsync(id);
+    next();
+  } catch (e) {
+    const apiErr = new APIError();
 
+    apiErr.fromJoi(e);
+    next(apiErr);
+  }
+}
+
+async function diff(req, _, next) {
+  const { firstId, secondId } = req.params;
+
+  try {
+    await idSchema.validateAsync(firstId);
+    await idSchema.validateAsync(secondId);
     next();
   } catch (e) {
     const apiErr = new APIError();
@@ -59,6 +73,7 @@ async function remove(req, _, next) {
 module.exports = {
   getAll,
   getOne,
+  diff,
   post,
   remove,
 };

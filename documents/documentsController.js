@@ -1,4 +1,5 @@
 const DocumentsDAL = require('./documentsDAL');
+const deepDiff = require('deep-diff');
 
 async function getAll(_, res, next) {
   try {
@@ -17,6 +18,20 @@ async function getOne(req, res, next) {
     const document = await DocumentsDAL.getOne(id);
 
     res.status(200).json(document);
+  } catch (e) {
+    next(e);
+  }
+}
+
+async function diff(req, res, next) {
+  const { firstId, secondId } = req.params;
+
+  try {
+    const [doc1, doc2] = await Promise.all([DocumentsDAL.getOne(firstId), DocumentsDAL.getOne(secondId)]);
+    const differences = deepDiff(doc1.document, doc2.document);
+
+    if (!differences) res.status(200).json(`Document ${firstId} is identical to Document ${secondId}`);
+    res.status(200).json(differences);
   } catch (e) {
     next(e);
   }
@@ -75,6 +90,7 @@ async function remove(req, res, next) {
 module.exports = {
   getAll,
   getOne,
+  diff,
   post,
   put,
   patch,
