@@ -45,10 +45,47 @@ async function post(req, _, next) {
 
   try {
     await postSchema.validateAsync(body);
-
     next();
   } catch (e) {
-    const apiErr = new APIError
+    const apiErr = new APIError();
+
+    apiErr.fromJoi(e);
+    next(apiErr);
+  }
+}
+
+async function put(req, _, next) {
+  const putSchema = Joi.object({
+    document: Joi.string.required(),
+  });
+
+  const { id } = req.params;
+  const body = req.body;
+
+  try {
+    await idSchema.validateAsync(id);
+    await putSchema.validateAsync(body);
+  } catch (e) {
+    const apiErr = new APIError();
+
+    apiErr.fromJoi(e);
+    next(apiErr);
+  }
+}
+
+async function patch(req, _, next) {
+  const patchSchema = Joi.object({
+    document: Joi.string.required(),
+  });
+
+  const { id } = req.params;
+  const body = req.body;
+
+  try {
+    await idSchema.validateAsync(id);
+    await patchSchema.validateAsync(body);
+  } catch (e) {
+    const apiErr = new APIError();
 
     apiErr.fromJoi(e);
     next(apiErr);
@@ -60,7 +97,6 @@ async function remove(req, _, next) {
 
   try {
     await idSchema.validateAsync(id);
-
     next();
   } catch (e) {
     const apiErr = new APIError();
@@ -74,6 +110,8 @@ module.exports = {
   getAll,
   getOne,
   diff,
+  put,
+  patch,
   post,
   remove,
 };

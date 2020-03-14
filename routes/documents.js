@@ -16,13 +16,11 @@ router.post('/', documentsValidation.post, documentsController.post);
 
 /* PUT */
 
-router.put('/:id', documentsController.put);
-// router.put('/:id', documentsValidation.put, documentsController.put);
+router.put('/:id', documentsValidation.put, documentsController.put);
 
 /* PATCH */
 
-router.patch('/:id', documentsController.patch);
-// router.patch('/:id', documentsValidation.patch, documentsController.patch);
+router.patch('/:id', documentsValidation.patch, documentsController.patch);
 
 /* DELETE */
 
