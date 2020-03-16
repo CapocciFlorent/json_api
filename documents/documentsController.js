@@ -54,9 +54,9 @@ async function put(req, res, next) {
   const body = req.body;
 
   try {
-    const document = await DocumentsDAL.update(id, body);
+    const document = await DocumentsDAL.upsert(id, body);
 
-    res.status(204).json(document);
+    res.status(200).json(document);
   } catch (e) {
     next(e);
   }
@@ -67,9 +67,9 @@ async function patch(req, res, next) {
   const body = req.body;
 
   try {
-    const document = await DocumentsDAL.update(id, body);
+    const patchDocument = await DocumentsDAL.update(id, body);
 
-    res.status(204).json(document);
+    res.status(200).json(patchDocument);
   } catch (e) {
     next(e);
   }
@@ -81,7 +81,7 @@ async function remove(req, res, next) {
   try {
     const document = await DocumentsDAL.remove(id);
 
-    res.status(204).json(document);
+    res.status(200).json(document);
   } catch (e) {
     next(e);
   }

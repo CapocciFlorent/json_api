@@ -56,15 +56,16 @@ async function post(req, _, next) {
 
 async function put(req, _, next) {
   const putSchema = Joi.object({
-    document: Joi.string.required(),
+    document: Joi.string().required(),
   });
 
   const { id } = req.params;
-  const body = req.body;
+  const { body } = req;
 
   try {
     await idSchema.validateAsync(id);
     await putSchema.validateAsync(body);
+    next();
   } catch (e) {
     const apiErr = new APIError();
 
@@ -75,17 +76,18 @@ async function put(req, _, next) {
 
 async function patch(req, _, next) {
   const patchSchema = Joi.object({
-    document: Joi.string.required(),
+    document: Joi.string().required(),
   });
 
   const { id } = req.params;
-  const body = req.body;
+  const { body } = req;
 
   try {
     await idSchema.validateAsync(id);
     await patchSchema.validateAsync(body);
+    next();
   } catch (e) {
-    const apiErr = new APIError();
+    const apiErr = new APIError(e);
 
     apiErr.fromJoi(e);
     next(apiErr);
@@ -99,7 +101,7 @@ async function remove(req, _, next) {
     await idSchema.validateAsync(id);
     next();
   } catch (e) {
-    const apiErr = new APIError();
+    const apiErr = new APIError(e);
 
     apiErr.fromJoi(e);
     next(apiErr);
