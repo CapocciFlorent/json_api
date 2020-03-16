@@ -1,12 +1,365 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "JSON API",
+    "title": "Json api",
     "version": "v1"
   },
   "servers": [
     {
-      "url": "/api/"
+      "url": "/"
     }
-  ]
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "listDocuments",
+        "tags": [
+          "Documents"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all documents",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Document"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createDocument",
+        "tags": [
+          "Documents"
+        ],
+        "requestBody": {
+          "description": "Document data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Document created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Document not created because of validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "operationId": "showDocument",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of document to show",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return document with given id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Document not retrieved because of validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "upsetDocument",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of document to update",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "requestBody": {
+          "description": "Document new data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateDocument",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of document to update",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "requestBody": {
+          "description": "Document new data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewDocument"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteDocument",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of document to delete",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document deleted successfully"
+          },
+          "404": {
+            "description": "Document not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Document": {
+        "allOf": [
+          {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          {
+            "required": [
+              "updatedAt"
+            ],
+            "properties": {
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          {
+            "required": [
+              "document"
+            ],
+            "properties": {
+              "document": {
+                "type": "object"
+              }
+            }
+          }
+        ]
+      },
+      "NewDocument": {
+        "required": [
+          "document"
+        ],
+        "properties": {
+          "document": {
+            "type": "object"
+          }
+        }
+      },
+      "ValidationError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "validation"
+            ]
+          },
+          "httpCode": {
+            "type": "string",
+            "enum": [
+              400
+            ]
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "\"key\" is required"
+              ]
+            }
+          }
+        }
+      },
+      "ValidationErrorDetail": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
+      "NotFoundError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "{ressource}_not_found"
+            ]
+          },
+          "httpCode": {
+            "type": "string",
+            "enum": [
+              400
+            ]
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "{Ressource} with id {id} not found"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
 }
