@@ -4,7 +4,8 @@ API manage JSON documents
 
 ## Documentation
 
-Open your favorit browser and see this [link](http://localhost:8080/api/documentation) after start local dev command
+This API uses [swagger](https://swagger.io/docs/) to create documentation
+Open your favorit browser and see this [link](http://localhost:8080/api/documentation) after start this API
 
 ## Installation
 
