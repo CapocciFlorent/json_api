@@ -44,6 +44,9 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewDocument"
+              },
+              "example": {
+                "document": "{\"key12\":\"value12\", \"key21\":\"value21\"}"
               }
             }
           }
@@ -85,7 +88,8 @@
             "description": "Id of document to show",
             "required": true,
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           }
         ],
         "responses": {
@@ -133,7 +137,8 @@
             "description": "Id of document to update",
             "required": true,
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           }
         ],
         "requestBody": {
@@ -143,6 +148,9 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewDocument"
+              },
+              "example": {
+                "document": "{\"key12\":\"value12\", \"key21\":\"value21\", \"key33\":{\"key33.1\": \"value33.1\"}}"
               }
             }
           }
@@ -182,7 +190,8 @@
             "description": "Id of document to update",
             "required": true,
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           }
         ],
         "requestBody": {
@@ -192,6 +201,9 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/NewDocument"
+              },
+              "example": {
+                "document": "{\"key12\":\"value12\", \"key21\":\"value21\", \"key33\": [\"key33.1\", \"key33.2\"]}"
               }
             }
           }
@@ -231,7 +243,8 @@
             "description": "Id of document to delete",
             "required": true,
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           }
         ],
         "responses": {
@@ -284,7 +297,12 @@
             ],
             "properties": {
               "document": {
-                "type": "object"
+                "type": "object",
+                "example": {
+                  "key1": "value1",
+                  "key2": "value2",
+                  "key3": "value3"
+                }
               }
             }
           }
@@ -296,7 +314,7 @@
         ],
         "properties": {
           "document": {
-            "type": "object"
+            "type": "string"
           }
         }
       },
