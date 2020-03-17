@@ -27,10 +27,10 @@ Start MySQL Server using [service](https://linux.die.net/man/8/service) on Linux
 sudo service mysql start
 ```
 
-Create MySql JSON_api_db database
+Create MySql json_api_db database
 
 ```bash
-mysql> CREATE DATABASE menagerie;
+mysql> CREATE DATABASE json_api_db;
 ```
 
 ## Usage
