@@ -43,7 +43,7 @@ async function upsert(id, properties) {
   const document = await DocumentModel.findByPk(id);
 
   if (!document) {
-    await DocumentModel.create({ ...properties });
+    await DocumentModel.create({ id, ...properties });
 
     return `Document ${id} has been created`
   }
