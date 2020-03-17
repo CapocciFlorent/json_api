@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 
 const documentsRouter = require('./routes/documents');
 const documentationRouter = require('./routes/documentation');
-const errorHandler = require('./errorHandler');
+const { handleError } = require('./errorHandler');
 
 const app = express();
 
@@ -14,9 +14,9 @@ app.use('/documentation', documentationRouter);
 app.use('/', documentsRouter);
 
 app.use(async (err, _, res, next) => {
-  await errorHandler.handleError(err);
+  const errResponse = await handleError(err);
 
-  res.status(err.httpCode).json(err.sanitize());
+  res.status(err.httpCode || err.statusCode).json(errResponse);
   next();
 });
 

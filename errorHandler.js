@@ -1,8 +1,9 @@
-class ErrorHandler {
-  static async handleError(err) {
-    if (err.isOperational) return;
-    console.log(err);
-  }
+async function handleError(err) {
+  if (err.isOperational) return err.sanitize();
+  console.log(err);
+  return 'Internal Error';
 }
 
-module.exports = ErrorHandler;
+module.exports = {
+  handleError
+};
