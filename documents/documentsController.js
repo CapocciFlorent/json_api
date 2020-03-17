@@ -67,9 +67,9 @@ async function patch(req, res, next) {
   const body = req.body;
 
   try {
-    const patchDocument = await DocumentsDAL.update(id, body);
+    const document = await DocumentsDAL.update(id, body);
 
-    res.status(200).json(patchDocument);
+    res.status(200).json(document);
   } catch (e) {
     next(e);
   }
