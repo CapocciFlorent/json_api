@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 
 const Database = require('../config/database');
+const { jsonParser } = require('../utils/index');
 
 class Document extends Model {}
 
@@ -30,7 +31,7 @@ Document.prototype.toResponse = ({
 }) => ({
   updatedAt,
   id,
-  document: JSON.parse(document),
+  document: jsonParser(document),
 });
 
 module.exports = Document;
